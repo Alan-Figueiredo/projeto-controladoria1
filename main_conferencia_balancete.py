@@ -25,9 +25,9 @@ import shutil
 # ─────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES — ajuste conforme seu arquivo
 # ─────────────────────────────────────────────────────────────────
-ARQUIVO_ENTRADA          = r"input/planilha-teste.xlsb"
+ARQUIVO_ENTRADA          = r"data/input/planilha-teste.xlsb"
 ABA_BALANCETE            = "Balancete"
-ARQUIVO_SAIDA            = "output/resultado_comparacao.xlsx"
+ARQUIVO_SAIDA            = r"data/output/resultado_comparacao.xlsx"
 
 ABAS_IGNORAR_EXTRA       = {'MENU', 'Instruções', 'Aux', 'Config'}
 
@@ -600,7 +600,7 @@ def preparar_arquivo():
         print("❌ Arquivo inválido. Use .xlsb ou .xlsx")
         return None
     
-    pasta_temp = os.path.abspath("temp")
+    pasta_temp = os.path.abspath("data/temp")
     os.makedirs(pasta_temp,exist_ok=True)
 
     nome_base = os.path.basename(arquivo_copia)
@@ -665,7 +665,7 @@ def main():
     # 5. Resumo no terminal (agora focado em CR)
     print("\n📊 Resumo de Pendências por Centro de Custo (CR):")
     
-    shutil.rmtree("temp")
+    shutil.rmtree("data/temp")
     # Reconstrói o mapa de CRs para o resumo visual
     abas_por_cr = {}
     for aba, crs in crs_por_aba.items():
