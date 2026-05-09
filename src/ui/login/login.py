@@ -33,7 +33,7 @@ class LoginWindow(QWidget):
         image.setPixmap(pixmap)
 
         #titulo
-        title = QLabel("Controladoria Grupo Itadil")
+        title = QLabel("Controladoria")
         title.setAlignment(Qt.AlignCenter)
         title.setStyleSheet("""
             font-size: 20px;
