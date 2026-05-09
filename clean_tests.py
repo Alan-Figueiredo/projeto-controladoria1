@@ -1,9 +1,60 @@
-import os
+import asyncio
 
-path_folder = "data/output/resultado_comparacao.xlsx"
+import flet as ft
 
-if os.path.exists(path_folder):
-    os.remove(path_folder)
-    print(f"Arquivo apagado con sucesso: {path_folder}")
-else:
-    print("O arquivo não foi encontrado.")
+
+def main(page: ft.Page):
+    page.title = "Routes Example"
+
+    def route_change():
+        page.views.clear()
+        page.views.append(
+            ft.View(
+                route="/",
+                controls=[
+                    ft.AppBar(
+                        title=ft.Text("Flet app"),
+                    ),
+                    ft.Button(
+                        "Visit Store",
+                        on_click=lambda: asyncio.create_task(
+                            page.push_route("/store")
+                        ),
+                    ),
+                ],
+            )
+        )
+        if page.route == "/store":
+            page.views.append(
+                ft.View(
+                    route="/store",
+                    controls=[
+                        ft.AppBar(
+                            title=ft.Text("Store"),
+                        ),
+                        ft.Button(
+                            "Go Home",
+                            on_click=lambda: asyncio.create_task(
+                                page.push_route("/")
+                            ),
+                        ),
+                    ],
+                )
+            )
+        page.update()
+
+    async def view_pop(e):
+        if e.view is not None:
+            print("View pop:", e.view)
+            page.views.remove(e.view)
+            top_view = page.views[-1]
+            await page.push_route(top_view.route)
+
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+
+    route_change()
+
+
+if __name__ == "__main__":
+    ft.run(main)
